@@ -7,11 +7,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 public class RecordFragment extends Fragment {
     private Record mRecord;
     private EditText mTitleField;
+    private Button mDateButton;
+    private CheckBox mSlovedCheckBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -40,6 +45,18 @@ public class RecordFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 //这个空间也故意留空
+            }
+        });
+
+        mDateButton = (Button)v.findViewById(R.id.record_date);
+        mDateButton.setText(mRecord.getDate().toString());
+        mDateButton.setEnabled(false);
+
+        mSlovedCheckBox = (CheckBox)v.findViewById(R.id.record_solved);
+        mSlovedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mRecord.setSolved(isChecked);
             }
         });
 

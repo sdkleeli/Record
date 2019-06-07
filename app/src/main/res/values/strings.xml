@@ -3,4 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="record_title_hint">Enter a title for the record.</string>
+    <string name="record_title_label">Title</string>
+    <string name="record_details_label">Details</string>
+    <string name="record_solved_label">Solved</string>
 </resources>

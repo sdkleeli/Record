@@ -42,4 +42,5 @@ public class Record {
     public void setSolved(boolean sloved) {
         mSloved = sloved;
     }
+
 }

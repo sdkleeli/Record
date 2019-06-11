@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,6 +27,7 @@ public class RecordFragment extends Fragment {
     private static final  int REQUEST_DATE = 0;
 
     private Record mRecord;
+    private File mPhotoFile;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSlovedCheckBox;
@@ -93,12 +95,13 @@ public class RecordFragment extends Fragment {
             }
         });
 
+
         return v;
     }
 
     @Override
     public  void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode!=Activity.RESULT_OK){
+        if(resultCode!=Activity.RESULT_OK){
             return;
         }
 

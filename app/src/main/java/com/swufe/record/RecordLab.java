@@ -20,12 +20,10 @@ public class RecordLab {
 
     private RecordLab(Context context){
         mRecords = new ArrayList<>();
-        for (int i = 0;i <100;i++){
-            Record record = new Record();
-            record.setTitle("Record #" +i);
-            record.setSolved(i % 2 == 0);
-            mRecords.add(record);
-        }
+    }
+
+    public void addRecord(Record r){
+        mRecords.add(r);
     }
 
     public List<Record> getRecords(){

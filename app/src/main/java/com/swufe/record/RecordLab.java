@@ -1,7 +1,16 @@
 package com.swufe.record;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 
+import com.swufe.record.database.RecordDbSchema.RecordBaseHelper;
+import com.swufe.record.database.RecordDbSchema.RecordCursorWrapper;
+import com.swufe.record.database.RecordDbSchema.RecordDbSchema.RecordTable;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,7 +18,8 @@ import java.util.UUID;
 public class RecordLab {
     private static RecordLab sRecordLab;
 
-    private List<Record> mRecords;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     public static RecordLab get(Context context){
         if(sRecordLab == null){
@@ -19,24 +29,90 @@ public class RecordLab {
     }
 
     private RecordLab(Context context){
-        mRecords = new ArrayList<>();
+        mContext = context.getApplicationContext();
+        mDatabase = new RecordBaseHelper(mContext)
+                .getWritableDatabase();
     }
 
     public void addRecord(Record r){
-        mRecords.add(r);
+        ContentValues values = getContentValues(r);
+
+        mDatabase.insert(RecordTable.NAME,null,values);
     }
 
     public List<Record> getRecords(){
-        return mRecords;
+        List<Record> records = new ArrayList<>();
+
+        RecordCursorWrapper cursor = queryRecords(null,null);
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()){
+                records.add(cursor.getRecord());
+                cursor.moveToNext();
+            }
+        }finally {
+            cursor.close();
+        }
+        return records;
     }
 
     public Record getRecord(UUID id){
-        for(Record record : mRecords){
-            if (record.getId().equals(id)){
-                return record;
+        RecordCursorWrapper cursor = queryRecords(
+                RecordTable.Cols.UUID + "=?",
+                new String[] {id.toString()}
+        );
+        try {
+            if(cursor.getCount() ==0){
+                return null;
             }
+
+            cursor.moveToFirst();
+            return cursor.getRecord();
+        }finally {
+            cursor.close();
         }
-        return null;
     }
 
+    public File getPhotoFile(Record record){
+        File externalFileSDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (externalFileSDir == null){
+            return null;
+        }
+
+        return new File(externalFileSDir,record.getPhotoFilename());
+    }
+
+    public void updateRecord(Record record){
+        String uuidString = record.getId().toString();
+        ContentValues values = getContentValues(record);
+
+        mDatabase.update(RecordTable.NAME,values,
+                RecordTable.Cols.UUID + "=?" ,
+                new String[]{uuidString});
+    }
+
+    private static ContentValues getContentValues(Record record){
+        ContentValues values = new ContentValues();
+        values.put(RecordTable.Cols.UUID,record.getId().toString());
+        values.put(RecordTable.Cols.TITLE,record.getTitle());
+        values.put(RecordTable.Cols.DATE,record.getDate().getTime());
+        values.put(RecordTable.Cols.SOLVED,record.isSloved() ? 1 : 0);
+
+        return values;
+    }
+
+    private RecordCursorWrapper queryRecords(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                RecordTable.NAME,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return new RecordCursorWrapper(cursor);
+    }
 }

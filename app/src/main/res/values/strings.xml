@@ -8,4 +8,5 @@
     <string name="record_solved_label">Solved</string>
     <string name="date_picker_title">Date of record:</string>
     <string name="new_record">New Record</string>
+
 </resources>

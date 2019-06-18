@@ -76,6 +76,7 @@ public class RecordListFragment extends Fragment {
             mAdapter = new RecordAdapter(records);
             mRecordRecyclerView.setAdapter(mAdapter);
         }else {
+            mAdapter.setRecords(records);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -138,6 +139,10 @@ public class RecordListFragment extends Fragment {
         @Override
         public int getItemCount(){
             return mRecords.size();
+        }
+
+        public void setRecords(List<Record> records){
+            mRecords = records;
         }
     }
 }

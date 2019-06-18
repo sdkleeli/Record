@@ -11,7 +11,11 @@ public class Record {
 
     public Record(){
         //生成唯一标识符
-        mId = UUID.randomUUID();
+       this( UUID.randomUUID());
+    }
+
+    public Record(UUID id){
+        mId = id;
         mDate = new Date();
     }
 
@@ -41,6 +45,10 @@ public class Record {
 
     public void setSolved(boolean sloved) {
         mSloved = sloved;
+    }
+
+    public String getPhotoFilename(){
+        return "IMG_" + getId().toString() + ".jpg";
     }
 
 }

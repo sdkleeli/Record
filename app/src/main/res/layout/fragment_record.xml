@@ -47,8 +47,8 @@
         android:text="@string/record_solved_label"/>
     <ImageView
         android:id="@+id/record_photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"/>
     <ImageButton
         android:id="@+id/record_camera"

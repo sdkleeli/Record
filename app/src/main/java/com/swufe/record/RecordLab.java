@@ -39,7 +39,7 @@ public class RecordLab {
 
         mDatabase.insert(RecordTable.NAME,null,values);
     }
-    
+
     public List<Record> getRecords(){
         List<Record> records = new ArrayList<>();
 

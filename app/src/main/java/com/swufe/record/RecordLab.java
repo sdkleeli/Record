@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
-import com.swufe.record.database.RecordDbSchema.RecordBaseHelper;
-import com.swufe.record.database.RecordDbSchema.RecordCursorWrapper;
-import com.swufe.record.database.RecordDbSchema.RecordDbSchema.RecordTable;
+import com.swufe.record.database.RecordDb.RecordBaseHelper;
+import com.swufe.record.database.RecordDb.RecordCursor;
+import com.swufe.record.database.RecordDb.RecordDb.RecordTable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,11 +39,11 @@ public class RecordLab {
 
         mDatabase.insert(RecordTable.NAME,null,values);
     }
-
+    
     public List<Record> getRecords(){
         List<Record> records = new ArrayList<>();
 
-        RecordCursorWrapper cursor = queryRecords(null,null);
+        RecordCursor cursor = queryRecords(null,null);
 
         try {
             cursor.moveToFirst();
@@ -58,7 +58,7 @@ public class RecordLab {
     }
 
     public Record getRecord(UUID id){
-        RecordCursorWrapper cursor = queryRecords(
+        RecordCursor cursor = queryRecords(
                 RecordTable.Cols.UUID + "=?",
                 new String[] {id.toString()}
         );
@@ -103,7 +103,7 @@ public class RecordLab {
         return values;
     }
 
-    private RecordCursorWrapper queryRecords(String whereClause, String[] whereArgs){
+    private RecordCursor queryRecords(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(
                 RecordTable.NAME,
                 null,
@@ -113,6 +113,6 @@ public class RecordLab {
                 null,
                 null
         );
-        return new RecordCursorWrapper(cursor);
+        return new RecordCursor(cursor);
     }
 }

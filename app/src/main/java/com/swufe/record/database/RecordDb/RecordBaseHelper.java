@@ -1,10 +1,10 @@
-package com.swufe.record.database.RecordDbSchema;
+package com.swufe.record.database.RecordDb;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.swufe.record.database.RecordDbSchema.RecordDbSchema.RecordTable;
+import com.swufe.record.database.RecordDb.RecordDb.RecordTable;
 
 public class RecordBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

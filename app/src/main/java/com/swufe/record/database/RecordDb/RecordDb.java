@@ -1,6 +1,6 @@
-package com.swufe.record.database.RecordDbSchema;
+package com.swufe.record.database.RecordDb;
 
-public class RecordDbSchema {
+public class RecordDb {
     public static final class RecordTable{
         public static final String NAME = "records";
 

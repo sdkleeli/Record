@@ -1,16 +1,16 @@
-package com.swufe.record.database.RecordDbSchema;
+package com.swufe.record.database.RecordDb;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.swufe.record.Record;
-import com.swufe.record.database.RecordDbSchema.RecordDbSchema.RecordTable;
+import com.swufe.record.database.RecordDb.RecordDb.RecordTable;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class RecordCursorWrapper extends CursorWrapper {
-    public RecordCursorWrapper(Cursor cursor) {
+public class RecordCursor extends CursorWrapper {
+    public RecordCursor(Cursor cursor) {
         super(cursor);
     }
 

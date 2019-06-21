@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +33,13 @@ public class RecordFragment extends Fragment {
 
     private static final  int REQUEST_DATE = 0;
     private static final int REQUEST_PHOTO=1;
+    private static final int REQUEST_TIME=2;
 
     private Record mRecord;
     private File mPhotoFile;
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mTimeButton;
     private CheckBox mSlovedCheckBox;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
@@ -103,6 +106,17 @@ public class RecordFragment extends Fragment {
             }
         });
 
+        mTimeButton = (Button) v.findViewById( R.id.record_time);
+        mTimeButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                TimePickerFragment dialog = TimePickerFragment.newInstance( mRecord.getHour(),mRecord.getMinute());
+                dialog.setTargetFragment( RecordFragment.this,REQUEST_TIME);
+                dialog.show(fragmentManager,DIALOG_DATE );
+            }
+        } );
+
         mSlovedCheckBox = (CheckBox)v.findViewById(R.id.record_solved);
         mSlovedCheckBox.setChecked(mRecord.isSloved());
         mSlovedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -147,13 +161,23 @@ public class RecordFragment extends Fragment {
                     .getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mRecord.setDate(date);
             updateDate();
-        }else if(requestCode == REQUEST_PHOTO){
+        }if(requestCode == REQUEST_TIME){
+            int hour = (int) data.getSerializableExtra( TimePickerFragment.EXTRA_HOUR );
+            int minute = (int) data.getSerializableExtra( TimePickerFragment.EXTRA_MINUTE );
+            mRecord.setHour( hour );
+            mRecord.setMinute( minute );
+            updateTime();
+        }if(requestCode == REQUEST_PHOTO){
             updatePhotoView();
         }
     }
 
+    private void updateTime(){
+        mTimeButton.setText(mRecord.getHour()+":"+mRecord.getMinute());
+    }
     private void updateDate() {
-        mDateButton.setText(mRecord.getDate().toString());
+        String mmDate = (String) DateFormat.format("EEEE, MMMM dd, yyyy kk:mm",mRecord.getDate());
+        mDateButton.setText(mmDate);
     }
 
     private void updatePhotoView(){

@@ -196,7 +196,7 @@ public class RecordFragment extends Fragment {
         mTimeButton.setText(mRecord.getHour()+":"+mRecord.getMinute());
     }
     private void updateDate() {
-        String mmDate = (String) DateFormat.format("EEEE, MMMM dd, yyyy kk:mm",mRecord.getDate());
+        String mmDate = (String) DateFormat.format("EEEE, MMMM dd, yyyy",mRecord.getDate());
         mDateButton.setText(mmDate);
     }
 

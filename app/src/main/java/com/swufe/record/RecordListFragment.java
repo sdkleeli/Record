@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -91,7 +92,8 @@ public class RecordListFragment extends Fragment {
         public void bindRecord(Record record){
             mRecord = record;
             mTitleTextView.setText(mRecord.getTitle());
-            mDateTextView.setText(mRecord.getDate().toString());
+            String mmDate = (String) DateFormat.format("EEEE, MMMM dd, yyyy ",mRecord.getDate());
+            mDateTextView.setText(mmDate);
             mSolvedCheckBox.setChecked(mRecord.isSloved());
         }
 

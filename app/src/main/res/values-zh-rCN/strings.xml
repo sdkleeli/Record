@@ -8,6 +8,7 @@
     <string name="record_details_label">时间</string>
     <string name="record_solved_label">解决了</string>
     <string name="date_picker_title">选择记录日期:</string>
+    <string name="time_picker_title">选择记录时间</string>
     <string name="new_record">增加记录</string>
     <string name="delete_record">删除记录</string>
 </resources>

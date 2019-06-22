@@ -14,9 +14,9 @@ import android.widget.TimePicker;
 public class TimePickerFragment extends DialogFragment {
 
     public static final String EXTRA_HOUR =
-            "om.example.lab.android.nuc.criminallntent.hour";
+            "com.swufe.record.hour";
     public static final String EXTRA_MINUTE =
-            "om.example.lab.android.nuc.criminallntent.minute";
+            "com.swufe.record.minute";
 
     public static final String ARG_Hour = "hour";
     public static final String ARG_Minute = "minute";
@@ -48,7 +48,7 @@ public class TimePickerFragment extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity())
                 .setView( view )
-                .setTitle( "Time of Crime" )
+                .setTitle( "选择记录时间：" )
                 .setPositiveButton( android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

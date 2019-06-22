@@ -13,6 +13,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -57,7 +60,24 @@ public class RecordFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID recordId = (UUID)getArguments().getSerializable(ARG_RECORD_ID);
         mRecord = RecordLab.get(getActivity()).getRecord(recordId);
+        setHasOptionsMenu(true);
         mPhotoFile = RecordLab.get(getActivity()).getPhotoFile(mRecord);
+    }
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.delete_record, menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete_record:
+                RecordLab.get(getActivity()).deleteRecord(mRecord);
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

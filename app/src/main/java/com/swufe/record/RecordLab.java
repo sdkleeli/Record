@@ -40,6 +40,10 @@ public class RecordLab {
         mDatabase.insert(RecordTable.NAME,null,values);
     }
 
+    public void deleteRecord(Record r) {
+        mDatabase.delete(RecordTable.NAME, "uuid = ?", new String[]{String.valueOf(r.getId())});
+    }
+
     public List<Record> getRecords(){
         List<Record> records = new ArrayList<>();
 
